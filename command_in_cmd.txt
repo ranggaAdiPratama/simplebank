@@ -1,0 +1,2 @@
+sqlc:
+ 	docker run --rm -v F:\go\simplebank:/src -w /src kjconroy/sqlc generate
