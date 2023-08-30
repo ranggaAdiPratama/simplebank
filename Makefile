@@ -13,10 +13,13 @@ migratedown:
 postgres:
 	docker run --name postgres16 -p 5432:5432 -e POSTGRES_USER=rangga -e POSTGRES_PASSWORD=mitsuha -d postgres
 
+server:
+	go run main.go
+
 sqlc:
 	docker run --rm -v F:\go\simplebank:/src -w /src kjconroy/sqlc generate
 
 test:
 	go test -v -cover ./...
 
-.PHONY: createdb dropdb migrateup migratedown postgres sqlc test
+.PHONY: createdb dropdb migrateup migratedown postgres server sqlc test
