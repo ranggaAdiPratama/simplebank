@@ -16,7 +16,7 @@ jobs:
 
     services:
       postgres:
-        image: postgres16
+        image: postgres
         env:
           POSTGRES_USER: rangga
           POSTGRES_PASSWORD: mitsuha
