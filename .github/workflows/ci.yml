@@ -18,7 +18,7 @@ jobs:
       postgres:
         image: postgres
         env:
-          POSTGRES_USER: rangga
+          POSTGRES_USER: postgres
           POSTGRES_PASSWORD: mitsuha
           POSTGRES_DB: simple_bank
         ports:
