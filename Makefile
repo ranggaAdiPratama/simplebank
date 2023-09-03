@@ -7,8 +7,14 @@ dropdb:
 migrateup:
 	migrate -path db/migration -database "postgresql://rangga:mitsuha@localhost:5432/simple_bank?sslmode=disable" -verbose up
 
+migrateup1:
+	migrate -path db/migration -database "postgresql://rangga:mitsuha@localhost:5432/simple_bank?sslmode=disable" -verbose up 1
+
 migratedown:
 	migrate -path db/migration -database "postgresql://rangga:mitsuha@localhost:5432/simple_bank?sslmode=disable" -verbose down
+
+migratedown1:
+	migrate -path db/migration -database "postgresql://rangga:mitsuha@localhost:5432/simple_bank?sslmode=disable" -verbose down 1
 
 mock:
 	mockgen -package mockdb -destination db/mock/store.go github.com/ranggaAdiPratama/simplebank/db/sqlc Store
@@ -25,4 +31,4 @@ sqlc:
 test:
 	go test -v -cover ./...
 
-.PHONY: createdb dropdb migrateup migratedown mock postgres server sqlc test
+.PHONY: createdb dropdb migrateup migrateup1 migratedown migratedown1 mock postgres server sqlc test
