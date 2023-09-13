@@ -32,3 +32,5 @@ test:
 	go test -v -cover ./...
 
 .PHONY: createdb dropdb migrateup migrateup1 migratedown migratedown1 mock postgres server sqlc test
+
+# migrate create -dir db/migration -ext sql -seq add_user_detail

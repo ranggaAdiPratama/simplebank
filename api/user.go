@@ -8,6 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/lib/pq"
 	db "github.com/ranggaAdiPratama/simplebank/db/sqlc"
+	"github.com/ranggaAdiPratama/simplebank/token"
 	"github.com/ranggaAdiPratama/simplebank/util"
 )
 
@@ -130,6 +131,43 @@ func (server *Server) loginUser(ctx *gin.Context) {
 	rsp := loginUserResponse{
 		AccessToken: accessToken,
 		User:        newUserResponse(user),
+	}
+
+	ctx.JSON(http.StatusOK, rsp)
+	return
+}
+
+type updateProfileResponse struct {
+	Address string `json:"address"`
+	Photo   string `json:"photo"`
+}
+
+func (server *Server) updateProfile(ctx *gin.Context) {
+	address := ctx.PostForm("address")
+
+	file, err := ctx.FormFile("photo")
+
+	if err != nil {
+		ctx.JSON(http.StatusBadGateway, errorResponse(err))
+		return
+	}
+
+	authPayload := ctx.MustGet(authorizationPayloadKey).(*token.Payload)
+
+	photo := file.Filename
+
+	path := "public/images/" + authPayload.Username + "_" + photo
+
+	err = ctx.SaveUploadedFile(file, path)
+
+	if err != nil {
+		ctx.JSON(http.StatusBadGateway, errorResponse(err))
+		return
+	}
+
+	rsp := updateProfileResponse{
+		Address: address,
+		Photo:   photo,
 	}
 
 	ctx.JSON(http.StatusOK, rsp)
