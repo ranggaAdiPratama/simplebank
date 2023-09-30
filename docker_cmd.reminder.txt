@@ -1,0 +1,6 @@
+docker run --name simplebank --network bank-network -p 8000:8000 -e GIN_MODE=release -e DB_SOURCE="postgresql://rangga:mitsuha@postgres16:5432/simple_bank?sslmode=disable" -e SERVER_ADDRESS=0.0.0.0:8000 simplebank:latest
+docker rmi [id]
+docker rm simplebank
+docker build -t simplebank:latest .
+docker network create bank-network
+docker network connect bank-network postgres16
