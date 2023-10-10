@@ -4,3 +4,5 @@ docker rm simplebank
 docker build -t simplebank:latest .
 docker network create bank-network
 docker network connect bank-network postgres16
+
+migrate create -ext sql -dir db/migration -seq <migration_name>
