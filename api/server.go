@@ -53,6 +53,7 @@ func (server *Server) setupRouter() {
 	authRoutes.POST("/profile", server.updateProfile)
 	authRoutes.POST("/transfers", server.createTransfer)
 
+	router.POST("/token/renew_access", server.renewAccessToken)
 	router.POST("/users", server.createUser)
 	router.POST("/users/login", server.loginUser)
 
