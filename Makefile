@@ -30,6 +30,12 @@ mock:
 postgres:
 	docker run --name postgres16 --network bank-network -p 5432:5432 -e POSTGRES_USER=rangga -e POSTGRES_PASSWORD=mitsuha -d postgres
 
+proto:
+	del /f pb\*.go
+	protoc --proto_path=proto --go_out=pb --go_opt=paths=source_relative \
+    --go-grpc_out=pb --go-grpc_opt=paths=source_relative \
+    proto/*.proto
+
 server:
 	go run main.go
 
@@ -39,6 +45,6 @@ sqlc:
 test:
 	go test -v -cover ./...
 
-.PHONY: createdb db_docs db_schema dropdb migrateup migrateup1 migratedown migratedown1 mock postgres server sqlc test
+.PHONY: createdb db_docs db_schema dropdb migrateup migrateup1 migratedown migratedown1 mock postgres proto server sqlc test
 
 # migrate create -dir db/migration -ext sql -seq add_user_detail
