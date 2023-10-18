@@ -1,4 +1,5 @@
 DB_URL=postgresql://rangga:mitsuha@localhost:5432/simple_bank?sslmode=disable
+GRPC_PORT=9000
 
 createdb:
 	docker exec -it postgres16 createdb --username=rangga --owner=rangga simple_bank
@@ -11,6 +12,9 @@ db_schema:
 
 dropdb:
 	docker exec -it postgres16 dropdb simple_bank
+
+evans:
+	evans --host localhost --port ${GRPC_PORT} -r repl
 
 migrateup:
 	migrate -path db/migration -database "$(DB_URL)" -verbose up
@@ -45,6 +49,6 @@ sqlc:
 test:
 	go test -v -cover ./...
 
-.PHONY: createdb db_docs db_schema dropdb migrateup migrateup1 migratedown migratedown1 mock postgres proto server sqlc test
+.PHONY: createdb db_docs db_schema dropdb evans migrateup migrateup1 migratedown migratedown1 mock postgres proto server sqlc test
 
 # migrate create -dir db/migration -ext sql -seq add_user_detail
