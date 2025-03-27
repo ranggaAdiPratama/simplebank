@@ -1,3 +1,5 @@
+PROJECT_PATH=F:\go\simplebank
+
 createdb:
 	docker exec -it postgres17 createdb --username=rangga --owner=rangga simple_bank
 
@@ -13,4 +15,10 @@ migrateup:
 postgres:
 	docker run --name postgres17 -p 5432:5432 -e POSTGRES_USER=rangga -e POSTGRES_PASSWORD=mitsuha -d postgres:17-alpine
 
-.PHONY: createdb dropdb migratedown migrateup postgres
+sqlc:
+	docker run --rm \
+		-v "$(PROJECT_PATH):/src" \
+		-w /src \
+		kjconroy/sqlc generate
+
+.PHONY: createdb dropdb migratedown migrateup postgres sqlc
